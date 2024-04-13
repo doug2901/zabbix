@@ -1,0 +1,91 @@
+---
+- name: DEBIAN - download zabbix Repo file
+  shell: curl -Lo /tmp/{{debian_zabbix_repo_file}} {{debian_zabbix_repo_url}}{{debian_zabbix_repo_file}}
+  args:
+    executable: /bin/bash
+  when: (ansible_os_family == "Debian")
+
+- name: DEBIAN - Install a install zabbix repo package
+  ansible.builtin.apt:
+    deb: /tmp/{{debian_zabbix_repo_file}}
+    update_cache: yes
+  when: (ansible_os_family == "Debian")
+
+- name: DEBIAN - Install zabbix-agent2
+  ansible.builtin.apt:
+    pkg:
+    - zabbix-agent2
+    - zabbix-agent2-plugin-*
+    update_cache: yes
+    state: present
+  register: install_zabbix_agent2
+  when: (ansible_os_family == "Debian")
+
+
+#- name: REDHAT -  Get zabbix repo key
+#  shell: curl -o /etc/pki/rpm-gpg/{{redhat_GPG_ZABBIX_KEY}} http://repo.zabbix.com/{{redhat_GPG_ZABBIX_KEY}}
+#  args:
+#    executable: /bin/bash
+#  when: (ansible_os_family == "RedHat")
+#
+#- name: REDHAT - import zabbix repo key
+#  shell: rpm --import /etc/pki/rpm-gpg/{{RPM-GPG-KEY-ZABBIX-08EFA7DD}}
+#  args:
+#    executable: /bin/bash
+#  when: (ansible_os_family == "RedHat")
+
+- name: REDHAT - import zabbix repo key
+  ansible.builtin.rpm_key:
+    state: present
+    key: '{{redhat_GPG_ZABBIX_KEY}}'
+  when: (ansible_os_family == "RedHat")
+
+- name: REDHAT - Install a install zabbix repo package
+  ansible.builtin.yum:
+    name: '{{redhat_zabbix_repo_url}}{{redhat_zabbix_repo_file}}'
+    state: latest
+    disable_gpg_check: no
+  when: (ansible_os_family == "RedHat")  
+
+- name: REDHAT - Install zabbix-agent2
+  ansible.builtin.yum:
+    name:
+      - zabbix-agent2
+      - zabbix-agent2-plugin-*
+    update_cache: yes
+    state: present
+  when: (ansible_os_family == "RedHat")
+
+- name: REDHAT - Firewall rule inbound 10050 to zabbix-server
+  ansible.posix.firewalld:
+    zone: public
+    rich_rule: 'rule family="ipv4" source address="{{zabbix_server}}" port protocol="tcp" port="10050" accept'
+    permanent: true
+    immediate: true
+    state: enabled
+  when: ansible_os_family == "RedHat"
+
+- name: copy zabbix_agent2.conf
+  template:
+    src: zabbix_agentd2.conf.j2
+    dest: /etc/zabbix/zabbix_agent2.conf
+    owner: root
+    group: root
+    mode: 0644
+  register: copy_template
+  when: (ansible_os_family == "Debian") or (ansible_os_family == "RedHat")
+  notify:
+    - Restart zabbix-agent2
+
+- name: start and enable zabbix-agent2 service
+  service:
+    name: zabbix-agent2
+    state: started
+    enabled: yes
+  register: start_zabbix_agent2
+  when: (ansible_os_family == "Debian") or (ansible_os_family == "RedHat")
+
+- name: Print Host IP
+  ansible.builtin.debug:
+    msg: "hostname:{{ ansible_hostname }} ips:{{ ansible_all_ipv4_addresses }}"
+

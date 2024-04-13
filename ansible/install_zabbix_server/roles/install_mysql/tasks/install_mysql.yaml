@@ -1,0 +1,68 @@
+---
+- name: download Mysql Repo file
+  shell: curl -Lo /tmp/{{mysql_repo_file}} {{mysql_repo_url}}{{mysql_repo_file}}
+  args:
+    executable: /bin/bash
+  register: dowload_mysql_repo
+
+- name: Install a install mySQL repo package
+  ansible.builtin.apt:
+    deb: /tmp/{{mysql_repo_file}}
+    update_cache: yes
+
+- name: Install mysql
+  ansible.builtin.apt:
+    pkg:
+    - python3-mysqldb
+    - default-libmysqlclient-dev
+    - default-mysql-server
+    - default-mysql-client
+    update_cache: yes
+    state: present
+  register: install_mysql
+
+- name: start and enable mysql service
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+  register: start_mysql
+  when: install_mysql
+
+- name: create zabbix_database
+  mysql_db:
+    name: "{{db_zabbix_name}}"
+    collation: utf8mb4_bin
+    encoding: utf8mb4
+    state: present
+  register: create_zabbix_database
+  when: start_mysql
+
+- name: create mysql zabbix_user
+  mysql_user:
+    name: "{{db_zabbix_user}}"
+    password: "{{db_zabbix_pass}}"
+    priv: '{{db_zabbix_name}}.*:ALL'
+    host: '%'
+    state: present
+  register: create_zabbix_user
+  when: create_zabbix_database
+
+- name: create mysql admin_user
+  mysql_user:
+    name: "{{db_admin_user}}"
+    password: "{{db_admin_pass}}"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present
+  register: create_admin_user
+  when: start_mysql
+
+#- name: Enable remote login to mysql
+#  lineinfile:
+#     path: /etc/mysql/mariadb.cnf
+#     regexp: '^bind-address'
+#     line: 'bind-address = 0.0.0.0'
+#     backup: yes
+#  notify:
+#     - Restart mysql

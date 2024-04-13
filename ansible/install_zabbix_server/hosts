@@ -1,0 +1,8 @@
+[mysql]
+iron-man
+
+[zabbix-server]
+iron-man
+
+[zabbix-agent]
+wolverine

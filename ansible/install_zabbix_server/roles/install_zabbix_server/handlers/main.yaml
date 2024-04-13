@@ -1,0 +1,11 @@
+- name: Enable remote login to mysql
+  lineinfile:
+     path: /etc/mysql/mariadb.cnf
+     regexp: '^bind-address'
+     line: 'bind-address = 0.0.0.0'
+     backup: yes
+
+- name: Restart mysql
+  service:
+    name: mysql
+    state: restarted

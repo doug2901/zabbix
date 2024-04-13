@@ -1,0 +1,71 @@
+---
+- name: download zabbix Repo file
+  shell: curl -Lo /tmp/{{zabbix_repo_file}} {{zabbix_repo_url}}{{zabbix_repo_file}}
+  args:
+    executable: /bin/bash
+  register: dowload_mysql_repo
+  when: (ansible_os_family == "Debian") or (ansible_os_family == "Ubuntu")
+
+- name: Install a install zabbix repo package
+  ansible.builtin.apt:
+    deb: /tmp/{{zabbix_repo_file}}
+    update_cache: yes
+
+- name: Install zabbix
+  ansible.builtin.apt:
+    pkg:
+    - zabbix-server-mysql
+    - zabbix-frontend-php
+    - zabbix-apache-conf
+    - zabbix-sql-scripts
+    - zabbix-agent
+    update_cache: yes
+    state: present
+  register: install_zabbix
+
+- name: import schema to database
+  shell: zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -u{{db_zabbix_user}} -p{{db_zabbix_pass}} -D{{db_zabbix_name}}
+  args:
+    executable: /bin/bash
+  ignore_errors: true
+  register: import_schema
+  when: install_zabbix
+  notify:
+     - Enable remote login to mysql
+     - Restart mysql
+
+
+- name: Configure zabbix_server.conf
+  lineinfile:
+     path: /etc/zabbix/zabbix_server.conf
+     regexp: '^DBPassword='
+     line: 'DBPassword={{db_zabbix_pass}}'
+     backup: yes
+  register: config_zabbix
+  when: import_schema
+  
+
+- name: start and enable zabbix-server service
+  service:
+    name: zabbix-server
+    state: started
+    enabled: yes
+  register: start_zabbix_server
+  when: config_zabbix
+
+- name: start and enable zabbix-agent service
+  service:
+    name: zabbix-agent
+    state: started
+    enabled: yes
+  register: start_zabbix_agent
+  when: start_zabbix_server
+
+- name: start and enable apache2 service
+  service:
+    name: apache2
+    state: restarted
+    enabled: yes
+  register: start_apache2
+  when: start_zabbix_agent
+

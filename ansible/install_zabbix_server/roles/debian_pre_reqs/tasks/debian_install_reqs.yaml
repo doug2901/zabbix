@@ -1,0 +1,33 @@
+  - name: Update all packages to their latest version
+    ansible.builtin.apt:
+      name: "*"
+      state: latest
+
+  - name: Upgrade the OS (apt-get dist-upgrade)
+    ansible.builtin.apt:
+      upgrade: dist
+
+  - name: Install packeges
+    ansible.builtin.apt:
+      pkg:
+      - zip
+      - curl
+      - net-tools
+      - apt-transport-https
+      - ca-certificates
+      - dirmngr
+      - gnupg
+      - vim
+      update_cache: yes
+      state: present
+
+  - name: Configure locale 
+    shell: sed -i -e "s/# en_US.UTF-8.*/en_US.UTF-8 UTF-8/" /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales && update-locale LANG=en_US.UTF-8
+    args:
+      executable: /bin/bash
+    register: configure_locale
+
+  - name: Ensure a locale exists
+    community.general.locale_gen:
+      name: en_US.UTF-8
+      state: present

@@ -1,0 +1,11 @@
+- hosts: localhost
+  become: true
+  gather_facts: true
+  roles:
+  - { role: debian_pre_reqs, tags: ["debian_pre_reqs_role"], when: (ansible_os_family == "Debian") }
+  - { role: install_mysql, tags: ["install_mysql_role"], when: (ansible_os_family == "Debian") }
+  - { role: install_zabbix_server, tags: ["install_zabbix_role"], when: (ansible_os_family == "Debian") }
+  tasks:
+    - name: Print Host IP
+      ansible.builtin.debug:
+        msg: "hostname:{{ ansible_hostname }} ip:{{ ansible_all_ipv4_addresses }}"

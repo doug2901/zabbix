@@ -1,0 +1,2 @@
+---
+- include_tasks: subscribe_zabbix_agent.yaml

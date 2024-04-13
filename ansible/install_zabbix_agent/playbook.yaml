@@ -1,0 +1,11 @@
+- hosts: localhost
+  become: true
+  gather_facts: true
+  roles:
+  - { role: install_pre_reqs, tags: ["install_pre_reqs_role"] }
+  - { role: install_zabbix_agent, tags: ["install_zabbix_agent_role"] }
+  - { role: subscribe_zabbix_agent, tags: ["subscribe_zabbix_agent_role"] }
+  tasks:
+    - name: Print Host IP
+      ansible.builtin.debug:
+        msg: "hostname:{{ ansible_hostname }} ip:{{ ansible_all_ipv4_addresses }}"

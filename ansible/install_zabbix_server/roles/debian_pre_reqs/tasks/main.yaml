@@ -1,0 +1,3 @@
+---
+# tasks file for install Consul
+- include_tasks: debian_install_reqs.yaml

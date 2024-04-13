@@ -1,0 +1,11 @@
+mysql_repo_url: https://dev.mysql.com/get/
+mysql_repo_file: mysql-apt-config_0.8.29-1_all.deb
+
+# zabbix
+db_zabbix_user: zabbix
+db_zabbix_pass: 0tFMmpGePNkk378hyYhs
+db_zabbix_name: zabbix
+
+#Admin
+db_admin_user: admin
+db_admin_pass: 2AeGUNptiH1um4fmOeVo

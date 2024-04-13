@@ -1,0 +1,39 @@
+  - name: DEBIAN - Update all packages to their latest version
+    ansible.builtin.apt:
+      name: "*"
+      state: latest
+    when: (ansible_os_family == "Debian")
+
+  - name: DEBIAN - Upgrade the OS (apt-get dist-upgrade)
+    ansible.builtin.apt:
+      upgrade: dist
+    when: (ansible_os_family == "Debian")
+
+  - name: DEBIAN - Install packeges
+    ansible.builtin.apt:
+      pkg:
+      - zip
+      - curl
+      - net-tools
+      update_cache: yes
+      state: present
+    when: (ansible_os_family == "Debian")
+
+  - name: REDHAT - Update all packages to their latest version
+    ansible.builtin.yum:
+      name: "*"
+      state: latest
+    when: (ansible_os_family == "RedHat")
+
+  - name: REDHAT - Install packages
+    ansible.builtin.yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+        - curl
+        - zip
+        - net-tools
+        - telnet 
+        - bind-utils
+      state: latest
+    when: (ansible_os_family == "RedHat")

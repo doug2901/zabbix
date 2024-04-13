@@ -1,0 +1,3 @@
+---
+# tasks file for install Consul
+- include_tasks: install_mysql.yaml
