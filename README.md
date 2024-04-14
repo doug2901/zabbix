@@ -22,7 +22,7 @@ Fique à vontade para fazer críticas construtivas e sugerir melhorias :)
 #### Definindo paremetros de configuração dos servidores:
 no arquivo vagrantfile defina as cofigurações para as maquinas virtuais
 
-É mandatório que o nome do servidor do zabbix seja "zabbix-server" e sistema operacional Debian 12, porque o script install_run_ansible.sh fará uma verificação para rodar o ansible-playbook para a instalação do zabbix server.
+É mandatório que o nome do servidor do zabbix seja "zabbix-server" e o sistema operacional seja Debian 12, porque o script install_run_ansible.sh fará uma verificação para rodar o ansible-playbook para a instalação do zabbix server.
 ```ruby
 vms = {
    # defina as configurações do zabbix-server 
@@ -33,8 +33,11 @@ vms = {
 }
 ```
 nos arquivos:
-- ansible\install_zabbix_server\roles\install_mysql\vars\main.yaml
-- ansible\install_zabbix_server\roles\install_zabbix_server\vars\main.yaml 
+```yaml
+ ansible\install_zabbix_server\roles\install_mysql\vars\main.yaml
+ ansible\install_zabbix_server\roles\install_zabbix_server\vars\main.yaml 
+```
+
 
 informe as variaveis para senha da conta de serviço de banco do zabbix e para a conta de admin.
 
@@ -57,7 +60,9 @@ db_zabbix_pass:
 ....
 ```
 no arquivo:
-- install_run_ansible.sh
+```yaml
+ install_run_ansible.sh
+```
 
 informe a chave publica para conexção ssh com putty ou ferramenta de conexão preferida.
 - [Veja aqui como criar chave privada com o puttyGen](https://www.ssh.com/academy/ssh/putty/windows/puttygen)
@@ -139,8 +144,9 @@ Clique em Add e será gerado o token
 ### Criando dois servidores e cadastrando no monitoramento
 
 no arquivo:
-- ansible/install_zabbix_agent/subscribe_zabbix_agent/vars/main.yaml
-
+```yaml
+ansible/install_zabbix_agent/subscribe_zabbix_agent/vars/main.yaml
+```
 informe o valor do token criado.
 
 ```yaml
