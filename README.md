@@ -7,11 +7,11 @@ Gostaria de reforçar que este procedimento foi desenvolvido apenas para fins de
 
 Fique à vontade para fazer críticas construtivas e sugerir melhorias :)
 
-## pré requisitos
+## pré-requisitos
 #### Softwares:
 - [Virtualbox](https://www.virtualbox.org/manual/ch02.html#installation_windows)
-- [vagrant](https://developer.hashicorp.com/vagrant/docs/installation)
-- [putty keygen](https://www.puttygen.com/download-putty)
+- [Vagrant](https://developer.hashicorp.com/vagrant/docs/installation)
+- [Putty keygen](https://www.puttygen.com/download-putty)
 
 #### Hardware:
 - 4GB RAM livress
@@ -19,8 +19,8 @@ Fique à vontade para fazer críticas construtivas e sugerir melhorias :)
 
 ## Iniciando o ambiente
 
-#### Definindo paremetros de configuração dos servidores:
-no arquivo vagrantfile defina as cofigurações para as maquinas virtuais
+#### Definindo parâmetros de configuração dos servidores:
+no arquivo vagrantfile defina as cofigurações para as maquinas virtuais.
 
 É mandatório que o nome do servidor do zabbix seja "zabbix-server" e o sistema operacional seja Debian 12, porque o script install_run_ansible.sh fará uma verificação para rodar o ansible-playbook para a instalação do zabbix server.
 ```ruby
@@ -39,7 +39,7 @@ nos arquivos:
 ```
 
 
-informe as variaveis para senha da conta de serviço de banco do zabbix e para a conta de admin.
+Informe as variáveis para senha da conta de serviço de banco do zabbix e para a conta de admin do banco de dados.
 
 
 ```yaml
@@ -64,7 +64,7 @@ no arquivo:
  install_run_ansible.sh
 ```
 
-informe a chave publica para conexção ssh com putty ou ferramenta de conexão preferida.
+Informe a chave publica para conexção ssh com putty ou ferramenta de conexão preferida.
 - [Veja aqui como criar chave privada com o puttyGen](https://www.ssh.com/academy/ssh/putty/windows/puttygen)
 
 ```bash
@@ -74,7 +74,7 @@ echo "##########################################"
 printf "ssh-rsa MdeQhxUul76TD5....." >> /home/vagrant/.ssh/authorized_keys
 ```
 ### Subindo o zabbix-server:
-entre na pasta onde está o arquivo vagrantfile e execute o vagrant para inciar a instalação do ambiente
+Entre na pasta onde está o arquivo vagrantfile e execute o vagrant para inciar a instalação do ambiente
 ```bash
 cd zabbix
 vagrant up zabbix-server
@@ -108,14 +108,14 @@ output:
 ==> zabbix-server: Vanilla Debian box. See https://app.vagrantup.com/debian for help and bug reports
 ```
 ### Configurando a console do zabbix e criando token para o zabbix api:
-no navegador acesse http://192.168.56.10/zabbix/ para fazer a configuração inicial.
+No navegador acesse http://192.168.56.10/zabbix/ para fazer a configuração inicial.
 
 Avance as etapas até chegar nas configurações de banco:
 informe a senha definada para a conta de serviço do banco do zabbix e avance.
 
 ![alt text](images/image-2.png)
 
-defina o nome do servidor e fuso horário.
+Defina o nome do servidor e fuso horário.
 
 ![alt text](images/image-3.png)
 
@@ -125,11 +125,11 @@ O usuario e senha padrão do zabbix é:
 Usuário: Admin
 Senha: zabbix
 
-vá até Administration > General > API Tokens
+Vá até Administration > General > API Tokens
 
 ![alt text](images/image-4.png)
 
-no canto superior direito, clique em Create API Token.
+No canto superior direito, clique em Create API Token.
 
 ![alt text](images/image-5.png)
 
@@ -143,11 +143,11 @@ Clique em Add e será gerado o token
 
 ### Criando dois servidores e cadastrando no monitoramento
 
-no arquivo:
+No arquivo:
 ```yaml
 ansible/install_zabbix_agent/subscribe_zabbix_agent/vars/main.yaml
 ```
-informe o valor do token criado.
+Informe o valor do token criado.
 
 ```yaml
 ...
@@ -155,7 +155,7 @@ token: 20f5b2c9205669b236bf858c2f4ea7fc409d96833aba161649706728cc67c6f1
 ...
 ```
 
-entre na pasta onde está o arquivo vagrantfile e execute o vagrant para inciar a instalação do ambiente.
+Entre na pasta onde está o arquivo vagrantfile e execute o vagrant para inciar a instalação do ambiente.
 
 ```bash
 cd zabbix
@@ -222,12 +222,12 @@ output:
 Verá que os servidores foram cadastrados automaticamente no zabbix:
 ![alt text](images/image.png)
 
-Caso queira destruir o ambiente execute o vagrant destroy.
+Caso queira destruir o ambiente, execute o vagrant destroy.
 ```bash
 vagrant destory -f 
 ```
 
-Caso queira apenas baixar o ambiente sem perder os servidores criados, execute o vagrant halt
+Caso queira apenas baixar o ambiente sem perder os servidores criados, execute o vagrant halt.
 ```bash
 vagrant halt
 ```
