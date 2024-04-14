@@ -9,9 +9,9 @@ Fique à vontade para fazer críticas construtivas e sugerir melhorias :)
 
 ## pré requisitos
 #### Softwares:
-- [Virtualbox](#https://www.virtualbox.org/manual/ch02.html#installation_windows)
-- [vagrant](#https://developer.hashicorp.com/vagrant/docs/installation)
-- [putty keygen](#https://www.puttygen.com/download-putty)
+- [Virtualbox](https://www.virtualbox.org/manual/ch02.html#installation_windows)
+- [vagrant](https://developer.hashicorp.com/vagrant/docs/installation)
+- [putty keygen](https://www.puttygen.com/download-putty)
 
 #### Hardware:
 - 4GB RAM livress
@@ -60,7 +60,7 @@ no arquivo:
 - install_run_ansible.sh
 
 informe a chave publica para conexção ssh com putty ou ferramenta de conexão preferida.
-- [Veja aqui como criar chave privada com o puttyGen](#https://www.ssh.com/academy/ssh/putty/windows/puttygen)
+- [Veja aqui como criar chave privada com o puttyGen](https://www.ssh.com/academy/ssh/putty/windows/puttygen)
 
 ```bash
 echo "##########################################"
@@ -232,8 +232,8 @@ Neste tutorial, demonstrei como criar um ambiente de monitoramento para testes e
 No entanto, utilizando a automação com Vagrant e Ansible, foi possível concluir o processo em média de 30 a 40 minutos.
 
 ### Referencias:
-- [Como criar chave privada](#https://www.ssh.com/academy/ssh/putty/windows/puttygen)
-- [Documetação do vagrant](#https://developer.hashicorp.com/vagrant/docs)
-- [Documetação do ansible](#https://docs.ansible.com/)
-- [Descomplicando o Ansible](#https://www.linuxtips.io/course/descomplicando-o-ansible)
-- [Zabbix](#https://www.zabbix.com/download?zabbix=6.0&os_distribution=debian&os_version=12&components=server_frontend_agent&db=mysql&ws=apache)
+- [Como criar chave privada](https://www.ssh.com/academy/ssh/putty/windows/puttygen)
+- [Documetação do vagrant](https://developer.hashicorp.com/vagrant/docs)
+- [Documetação do ansible](https://docs.ansible.com/)
+- [Descomplicando o Ansible](https://www.linuxtips.io/course/descomplicando-o-ansible)
+- [Zabbix](https://www.zabbix.com/download?zabbix=6.0&os_distribution=debian&os_version=12&components=server_frontend_agent&db=mysql&ws=apache)
