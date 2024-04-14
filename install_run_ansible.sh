@@ -25,7 +25,7 @@ fi
 echo "##########################################"
 echo "add private key for connect SSH with putty"
 echo "##########################################"
-printf "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8TeteWxq/lkAWSusHgbK2s0ccpw4eifD27IdDhtBFYw62+uBV/rtT3/u5tfo34vadSKLWTrKPsqru4PmqVRayWjGurdhTYYgLFKf8TcG0o7EaplcENghoiZpHcoh8dGRhPvJHpfljP+d/USSUZDVtBD1FM55KEy03vVLy4blAL/vj5K0hOvs2pmiRPkk+rof9O7RyYhC2+9aVaf4Ch29dr/ddfdUjNxuc6kVlfjqPIWWwqcTx5QfQZNYMhAN8YClMvI+/05R2YGdjqbcB/WV3DdRXj9pXPYmFaW4CkGOFmaOiYebcYVr6XSSE8w+acr8WLBmwIY9lxMbanWFjIIo9 ssh-key-2023-09-13" >> /home/vagrant/.ssh/authorized_keys
+printf "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCi/2BbT3vzuTo6FLd+YBafEQMVXebv42rZuaBaIMdeQhxUul76TD5QP0r2J7lOblqd5br2winXQUoe/Obnn6mHiWeqlPd6X9P9p4xUZWDTN0+SQ5HIGcHb4RjarvH7LJxkuEMco3l+Ey5fGnjV0k16+6dxFocDHkbXtePobt92xqJYTpjtPVNONPLzbfAQ0QYMnmZPOGuLF2GnJbn+nwZI3v2ko6dlcxdPPfj9bLcLqdsTevB1MS83GhwdEQevdJOKH6b/PETvw1MQ4I6zzOL4b7GwOZNLpiwT2+EgrKpSZjP4hdssjV8bv6083CO6qImcZvFFB2WHAmoUJJZT4Bql rsa-key-20240413" >> /home/vagrant/.ssh/authorized_keys
       
 echo "#######################"
 echo "Rodar ansible-laybook!"
