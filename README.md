@@ -237,7 +237,7 @@ Neste tutorial, demonstrei como criar um ambiente de monitoramento para testes e
 
 No entanto, utilizando a automação com Vagrant e Ansible, foi possível concluir o processo em média de 30 a 40 minutos.
 
-### Referencias:
+### Referências:
 - [Como criar chave privada](https://www.ssh.com/academy/ssh/putty/windows/puttygen)
 - [Documetação do vagrant](https://developer.hashicorp.com/vagrant/docs)
 - [Documetação do ansible](https://docs.ansible.com/)
