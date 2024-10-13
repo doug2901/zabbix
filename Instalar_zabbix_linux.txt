@@ -1,0 +1,35 @@
+cd /usr/local
+wget http://www.zabbix.com/downloads/2.4.4/zabbix_agents_2.4.4.linux2_6.amd64.tar.gz
+wget http://www.zabbix.com/downloads/3.0.0/zabbix_agents_3.0.0.linux2_6.amd64.tar.gz
+wget http://www.zabbix.com/downloads/3.0.0/zabbix_agents_3.0.0.linux2_6.i386.tar.gz
+wget http://www.zabbix.com/downloads/3.2.0/zabbix_agents_3.2.0.linux2_6.amd64.tar.gz
+wget http://www.zabbix.com/downloads/3.2.0/zabbix_agents_3.2.0.linux2_6.i386.tar.gz
+
+
+tar -zxvf zabbix_agents_2.4.4.linux2_6.amd64.tar.gz
+tar -zxvf zabbix_agents_3.0.0.linux2_6.amd64.tar.gz
+tar -zxvf zabbix_agents_3.0.0.linux2_6.i386.tar.gz
+
+cd /usr/local/etc
+ln -s /usr/local/conf/zabbix_agentd.conf zabbix_agentd.conf
+
+vi zabbix_agentd.conf
+Server=127.0.0.1 ( change for )
+Server=10.161.69.107,10.161.69.157 
+useradd zabbix
+su zabbix
+/usr/local/sbin/zabbix_agentd
+exit
+
+vi /etc/rc.local
+#zabbix_agent
+/usr/local/sbin/zabbix_agentd
+
+
+
+
+Regra de IPTABLES
+
+history | grep 10.101.165.66
+iptables -S | grep 10.101.165.66
+iptables -A INPUT -s 10.101.165.66/32 -p tcp -m tcp --dport 10050 -j ACCEPT
