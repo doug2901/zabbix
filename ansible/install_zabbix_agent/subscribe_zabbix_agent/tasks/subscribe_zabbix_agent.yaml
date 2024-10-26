@@ -30,7 +30,7 @@
       - type: 1
         main: 1
         useip: 1
-        ip: '{{ ansible_eth1.ipv4.address }}'
+        ip: '{{ ansible_enp0s3.ipv4.address }}'
         dns: ""
         port: "10050"
     tags:

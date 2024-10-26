@@ -34,7 +34,7 @@ if [ "$(hostname)" == "zabbix-server" ]; then
         echo "########################"
         echo "Instalando zabbix-Server"
         echo "########################"
-        ansible-playbook --connection=localhost /ansible/install_zabbix_server/playbook.yaml
+        ansible-playbook --connection=localhost /ansible/install_zabbix_server/playbook_with_vagrant.yaml
     else
         echo "O hostname é zabbix-server, mas o sistema nao e Debian."
     fi
@@ -42,5 +42,5 @@ else
         echo "########################"
         echo "Instalando zabbix-agent"
         echo "########################"
-        ansible-playbook --connection=localhost /ansible/install_zabbix_agent/playbook.yaml
+        ansible-playbook --connection=localhost /ansible/install_zabbix_agent/playbook_with_vagrant.yaml
 fi

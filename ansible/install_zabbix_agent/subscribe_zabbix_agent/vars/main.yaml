@@ -1,4 +1,4 @@
-zabbix_server: 192.168.56.10
-token: 4621e54aaebf6fe8fe45dd50590174d67e062be1482086a4ae0732206f17f3a3
+zabbix_server: 192.168.15.143
+token: 310c1c724a25ea711b618034cdf4fe9380df834c8c2c5814b8b7885a7346ee58
 host_groups: Linux servers
 template: Linux by Zabbix agent

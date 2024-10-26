@@ -1,0 +1,5 @@
+[zabbix-server]
+192.168.15.143
+
+[zabbix-agent]
+drax
