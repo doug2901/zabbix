@@ -1,0 +1,45 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "ZABBIX",
+    "collectionId": "3fc5ab64-c5e3-492c-b1d5-daa15c11d98f",
+    "dateExported": "2024-11-07T02:09:14.217Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "5a29c043-ea70-4e7c-aacc-896abcc3ded8",
+            "colId": "3fc5ab64-c5e3-492c-b1d5-daa15c11d98f",
+            "containerId": "",
+            "name": "GET-GROUPID-ZABBX",
+            "url": "http://192.168.56.10/zabbix/api_jsonrpc.php",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-11-07T01:46:47.191Z",
+            "modified": "2024-11-07T01:46:47.191Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"hostgroup.get\",\n  \"params\": {\n    \"output\": [\"groupid\", \"name\"]\n  },\n  \"id\": 2,\n  \"auth\": \"INFORMAR_TOKEN\"\n}\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "143f7077-b2e8-4077-90d6-9a6af93dc5bf",
+            "colId": "3fc5ab64-c5e3-492c-b1d5-daa15c11d98f",
+            "containerId": "",
+            "name": "GET-TEMPLATES-ZABBX",
+            "url": "http://192.168.56.10/zabbix/api_jsonrpc.php",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-11-07T01:46:59.115Z",
+            "modified": "2024-11-07T01:46:59.115Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"template.get\",\n  \"params\": {\n    \"output\": [\"groupid\", \"name\"]\n  },\n  \"id\": 2,\n  \"auth\": \"INFORMAR_TOKEN\"\n}\n",
+                "form": []
+            }
+        }
+    ],
+    "ref": "nv0rYWAuSlDftOkSACD1WQnIN8yy4CXFuUkUPgfaHcroLhe1ZwHdBGOd3diLmlnW_beU74OqkWqg4JGwcaO4jg"
+}

@@ -3,5 +3,5 @@ zabbix_repo_url: https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-re
 #zabbix_repo_file: zabbix-release_6.4-1+debian12_all.deb
 zabbix_repo_file: zabbix-release_latest+debian12_all.deb
 db_zabbix_user: zabbix
-db_zabbix_pass: 0tFMmpGePNkk378hyYhs
+db_zabbix_pass: INFORMAR_SENHA
 db_zabbix_name: zabbix

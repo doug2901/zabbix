@@ -56,6 +56,14 @@
     state: present
   when: (ansible_os_family == "RedHat")
 
+- name: start firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  register: start_firewalld
+  when: ansible_os_family == "RedHat"
+
 - name: REDHAT - Firewall rule inbound 10050 to zabbix-server
   ansible.posix.firewalld:
     zone: public

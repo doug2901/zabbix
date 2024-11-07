@@ -1,5 +1,5 @@
 zabbix_server: 192.168.56.10
-token: 54e2b7a9764455d80c02566725b791fc3945d416f7264a5f0182461e90d31502
+token: INFORMAR_TOKEN
 host_groups: 2 #Linux servers
 template: 10001 #Linux by Zabbix agent
 
