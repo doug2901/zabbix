@@ -3,37 +3,91 @@
   ansible.builtin.set_fact:
     ansible_zabbix_auth_key: '{{token}}'
 
-- name: Create a new host or rewrite an existing host's info
+
+- name: Create or update host in Zabbix
+  shell: |
+    curl -s -X POST -H "Content-Type: application/json" -d '{
+      "jsonrpc": "2.0",
+      "method": "host.create",
+      "params": {
+        "host": "{{ ansible_hostname }}",
+        "name": "{{ ansible_hostname }}",
+        "description": "{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}",
+        "groups": [
+          {
+            "groupid": "{{ host_groups }}"
+          }
+        ],
+        "templates": [
+          {
+            "templateid": "{{ template }}"
+          }
+        ],
+        "status": 0,
+        "inventory_mode": 1,
+        "interfaces": [
+          {
+            "type": 1,
+            "main": 1,
+            "useip": 1,
+            "ip": "{{ ansible_eth1.ipv4.address }}",
+            "dns": "",
+            "port": "10050"
+          }
+        ],
+        "tags": [
+          {
+            "tag": "created_with_ansible"
+          },
+          {
+            "tag": "{{ ansible_system }}",
+            "value": "{{ ansible_os_family }}"
+          }
+        ]
+      },
+      "auth": "{{ token }}",
+      "id": 1
+    }' http://{{ zabbix_server }}/zabbix/api_jsonrpc.php
+  args:
+    executable: /bin/bash
+  register: result
+
+- name: Debug result
+  debug:
+    var: result.stdout
+
+# O JOB abaixo não estava funcionando para zabbix 7, então ajustei para o template acima para que seja compativel com zabbix 6 e 7.
+#- name: Create a new host or rewrite an existing host's info
 # Set task level following variables for Zabbix Server host in task
-  vars:
-    ansible_network_os: community.zabbix.zabbix
-    ansible_connection: httpapi
-    ansible_httpapi_port: 80
-    ansible_httpapi_use_ssl: false
-    ansible_httpapi_validate_certs: false
-    ansible_zabbix_url_path: "zabbix" # If Zabbix WebUI runs on non-default (zabbix) path ,e.g. http://<FQDN>/zabbixeu
-    ansible_zabbix_auth_key: '{{token}}'
-  become: false
-  delegate_to: '{{zabbix_server}}'
-  community.zabbix.zabbix_host:
-    host_name: '{{ ansible_hostname }}'
-    visible_name: '{{ ansible_hostname }}'
-    description: '{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}'
-    host_groups:
-      - '{{ host_groups }}'
-    link_templates:
-      - '{{ template }}'
-    status: enabled
-    state: present
-    inventory_mode: automatic
-    interfaces:
-      - type: 1
-        main: 1
-        useip: 1
-        ip: '{{ ansible_enp0s3.ipv4.address }}'
-        dns: ""
-        port: "10050"
-    tags:
-      - tag: created_with_ansible
-      - tag: '{{ ansible_system }}'
-        value: '{{ ansible_os_family }}'
+#  vars:
+#    ansible_network_os: community.zabbix.zabbix
+#    ansible_connection: httpapi
+#    ansible_httpapi_port: 80
+#    ansible_httpapi_use_ssl: false
+#    ansible_httpapi_validate_certs: false
+#    ansible_zabbix_url_path: "zabbix" # If Zabbix WebUI runs on non-default (zabbix) path ,e.g. http://<FQDN>/zabbixeu
+#    ansible_zabbix_auth_key: '{{token}}'
+#  become: false
+#  delegate_to: '{{zabbix_server}}'
+#  community.zabbix.zabbix_host:
+#    host_name: '{{ ansible_hostname }}'
+#    visible_name: '{{ ansible_hostname }}'
+#    description: '{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}'
+#    host_groups:
+#      - '{{ host_groups }}'
+#    link_templates:
+#      - '{{ template }}'
+#    status: enabled
+#    state: present
+#    inventory_mode: automatic
+#    interfaces:
+#      - type: 1
+#        main: 1
+#        useip: 1
+#        ip: '{{ ansible_eth1.ipv4.address }}'
+#        dns: ""
+#        port: "10050"
+#    tags:
+#      - tag: created_with_ansible
+#      - tag: '{{ ansible_system }}'
+#        value: '{{ ansible_os_family }}'

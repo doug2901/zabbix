@@ -44,7 +44,7 @@
   ansible.builtin.yum:
     name: '{{redhat_zabbix_repo_url}}{{redhat_zabbix_repo_file}}'
     state: latest
-    disable_gpg_check: no
+    disable_gpg_check: yes
   when: (ansible_os_family == "RedHat")  
 
 - name: REDHAT - Install zabbix-agent2
